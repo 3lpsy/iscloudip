@@ -15,13 +15,14 @@ def get_db_path():
 def get_args():
     parser = argparse.ArgumentParser(description='A solar system wide communication protocol')
     parser.add_argument('-i', '--ip', help='IP/CIDR')
+    parser.add_argument('-l', '--list', action='store_true', help='List Available Providers')
     parser.add_argument('-s', '--sync', help='Sync Provider', action='store_true')
     parser.add_argument('-p', '--provider', help='Provider', default="aws")
-    parser.add_argument('-f', '--force', help='Force Installation')
-    parser.add_argument('-v', '--verbose', help='Verbose')
+    parser.add_argument('-f', '--force', action='store_true', help='Force Installation')
+    parser.add_argument('-v', '--verbose', action='store_true', help='Verbose')
     parser.add_argument('-c', '--clear', help='Clear Database Cache')
-    parser.add_argument('--drop', action='store_true', help='Drop Databases')
     parser.add_argument('-d', '--debug', action='store_true', help='Debug Mode')
+    parser.add_argument('--drop', action='store_true', help='Drop Databases')
     return parser.parse_args()
 
 if __name__ == "__main__":
@@ -56,6 +57,8 @@ if __name__ == "__main__":
         else:
             provider = args.provider
             sys.exit(app.clear(provider))
+    elif args.list:
+        sys.exit(app.list())
     elif not args.ip:
         sys.exit(print("Please enter an IP or CIDR", file=sys.stderr))
     else:

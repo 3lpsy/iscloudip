@@ -57,3 +57,8 @@ class App(object):
 
     def drop_all(self):
         self.db.drop_all()
+
+    def list(self):
+        for name, provider in self.get_providers().items():
+            print("Provider: {} \nDescription: {}".format(provider.name, provider.description))
+        return True
