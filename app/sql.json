@@ -1,0 +1,11 @@
+{
+    "CREATE_PROVIDERS_IF_NOT_EXISTS": "CREATE TABLE  IF NOT EXISTS providers\n             (id INTEGER PRIMARY KEY AUTOINCREMENT, name text, description text)",
+    "CREATE_RANGES_IF_NOT_EXISTS": "CREATE TABLE  IF NOT EXISTS ranges\n             (id INTEGER PRIMARY KEY AUTOINCREMENT, cidr text, ip_version test, description text, provider text)",
+    "DROP_RANGES_TABLE": "DROP TABLE IF EXISTS ranges",
+    "DROP_PROVIDERS_TABLE": "DROP TABLE IF EXISTS providers",
+    "GET_PROVIDER": "SELECT * FROM providers where name = :name",
+    "DELETE_RANGES_FOR_PROVIDER": "DELETE FROM ranges where provider = :provider",
+    "INSERT_PROVIDER": "INSERT INTO providers values (null, :name, :description)",
+    "INSERT_RANGES": "INSERT INTO ranges (id, cidr, description, ip_version, provider) values (null, :cidr, :description, :ip_version, :provider)"
+
+}

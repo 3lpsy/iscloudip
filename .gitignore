@@ -1,0 +1,78 @@
+*.py[cod]
+.cache
+venv/
+vmenv/
+vmenv*
+mvenv/
+mvenv*
+storage/files/*
+
+.DS_Store
+.DS_STORE
+*.rdb
+.env
+*.pyc
+*.db
+
+.cache/
+.vagrant/
+.vagrant
+migrations
+migrations/
+migrations/*
+__pycache__
+__pycache__/
+__pycache__/*
+
+# package-lock.json should be included when building offserver
+package-lock.json
+
+static/public/js/*
+static/protected/js/*
+
+# C extensions
+*.so
+
+# Packages
+*.egg
+*.egg-info
+eggs
+parts
+
+var
+sdist
+develop-eggs
+.installed.cfg
+lib
+lib64
+
+# Installer logs
+pip-log.txt
+
+# Unit test / coverage reports
+.coverage
+.tox
+nosetests.xml
+
+# Translations
+*.mo
+
+# Mr Developer
+.mr.developer.cfg
+.project
+.pydevproject
+
+# Complexity
+output/*.html
+output/*/index.html
+
+# Sphinx
+docs/_build
+
+.webassets-cache
+
+# Virtualenvs
+env/
+
+node_modules/
+node_modules
