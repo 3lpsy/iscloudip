@@ -13,7 +13,7 @@ def get_db_path():
     return os.path.join(get_data_dir(),  "db.sqlite")
 
 def get_parser():
-    parser = argparse.ArgumentParser(description='A solar system wide communication protocol')
+    parser = argparse.ArgumentParser(description='A Command Line Application to Compare an IP Against a Cloud Provider\'s publicly available list of IPs')
     parser.add_argument('-i', '--ip', help='IP/Range')
     parser.add_argument('--ranges', action='store_true', help='List Available IP Ranges')
     parser.add_argument('-s', '--sync', help='Sync Provider', action='store_true')

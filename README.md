@@ -7,7 +7,7 @@
 usage: main.py [-h] [-i IP] [--ranges] [-s] [-p PROVIDER] [-f] [-c]
                [--list-providers] [--debug] [-v] [--silent] [--drop]
 
-A solar system wide communication protocol
+A Command Line Application to Compare an IP Against a Cloud Provider's publicly available list of IPs
 
 optional arguments:
   -h, --help            show this help message and exit
