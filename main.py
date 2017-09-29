@@ -10,7 +10,7 @@ def get_data_dir():
     return os.path.join(os.path.dirname(os.path.realpath(__file__)), 'data')
 
 def get_db_path():
-    return os.path.join(get_data_dir(),  "db/db.sqlite")
+    return os.path.join(get_data_dir(),  "db.sqlite")
 
 def get_parser():
     parser = argparse.ArgumentParser(description='A solar system wide communication protocol')
