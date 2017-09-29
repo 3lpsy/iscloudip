@@ -52,20 +52,14 @@ $ python3 main.py -i 52.222.128.3 -p aws
 
 # list available providers
 $ python3 main.py --list-providers
-
-# manually sync all providers
-$ python3 main.py -s
 Provider: aws | Amazon Web Services
 Provider: azure | Azure Cloud Hosting
 
+# manually sync all providers
+$ python3 main.py -s
+
 # sync a specific provider
 $ python3 main.py -s -p aws
-
-# clear cached database of ip ranges
-$ python3 main.py --clear
-
-# drop database tables
-$ python3 main.py --drop
 
 # list all ranges currently in the database
 $ python3 main.py --ranges
@@ -73,6 +67,11 @@ $ python3 main.py --ranges
 # list all ranges for a provider
 $ python3 main.py --ranges -p -azure
 
+# clear cached database of ip ranges
+$ python3 main.py --clear
+
+# drop database tables
+$ python3 main.py --drop
 
 # TODO
 
