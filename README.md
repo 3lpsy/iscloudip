@@ -2,9 +2,9 @@
 
 The iscloudip app a command line python application that allows you to search Cloud Provider's publicly listed IP ranges to determine if a given IP falls within their network.
 
-This is useful for determining who the hosting provider of different web applications. While a typically method of completing this task could be to check DNS records, this instead app relies on lists of IP ranges publicly provided by Cloud Services.
+This is useful for determining the hosting provider of different web applications. While a typical method of completing this task could be to check DNS records, this app relies on pulling lists of IP ranges publicly provided by Cloud Services.
 
-The tools requires python3 but does not require any additional pip packages so setting up a virtualenv or pulling 3rd party code will not be required. In addition, the package itself will create a local sqlite database and cache the IP ranges in order to make searching faster.
+The tool requires python3 but does not require any additional pip packages so setting up a virtualenv or pulling 3rd party code will not be required. In addition, the package itself will create a local sqlite database and cache the IP ranges there in order to make searching faster.
 
 
 ## Help
