@@ -83,18 +83,11 @@ $ python3 main.py --drop
 
 # TODO
 
-[ ] Update Comments
-
-[ ] Use logger service instead of print
-
-    [ ] Incorpoate verbosity
-
-    [ ] Provide file logging for debugging
-
-[ ] Allow setting up a manual provider
-
-[ ] Allow manually importing IPs to manual provider
-
-[ ] Let user import their own python3 providers
-
-[ ] Let user configure whether to clear cache on sync or not
+- [ ] Update Comments
+- [ ] Use logger service instead of print
+- [ ] Incorporate verbosity
+- [ ] Provide file logging for debugging
+- [ ] Allow setting up a manual provider
+- [ ] Allow manually importing IPs to manual provider
+- [ ] Let user import their own python3 providers
+- [ ] Let user configure whether to clear cache on sync or not
