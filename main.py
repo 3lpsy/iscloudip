@@ -14,13 +14,13 @@ def get_db_path():
 
 def get_parser():
     parser = argparse.ArgumentParser(description='A Command Line Application to Compare an IP Against a Cloud Provider\'s publicly available list of IPs')
-    parser.add_argument('-i', '--ip', help='IP/Range')
-    parser.add_argument('--ranges', action='store_true', help='List Available IP Ranges')
-    parser.add_argument('-s', '--sync', help='Sync Provider', action='store_true')
-    parser.add_argument('-p', '--provider', help='Provider')
+    parser.add_argument('-i', '--ip', help="Search Cloud Provider's for IP")
+    parser.add_argument('--ranges', action='store_true', help='List Cloud Provider IP Ranges')
+    parser.add_argument('-s', '--sync', help='Sync Cloud Provider IP Ranges', action='store_true')
+    parser.add_argument('-p', '--provider', help='Cloud Provider')
     parser.add_argument('-f', '--force', action='store_true', help='Force Installation')
     parser.add_argument('-c', '--clear', action='store_true', help='Clear Database Cache')
-    parser.add_argument('--list-providers', action='store_true', help='List Available Providers')
+    parser.add_argument('--list-providers', action='store_true', help='List Available Cloud Providers')
     parser.add_argument('--debug', action='store_true', help='Debug Mode')
     parser.add_argument('-v', '--verbose', action='store_true', help='Verbose Mode')
     parser.add_argument('--silent', action='store_true', help='Silent Mode')

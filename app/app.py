@@ -2,6 +2,7 @@ from .enums import verbosities
 from .validators import IpValidator, CidrValidator, Ipv4Validator, Ipv6Validator
 from .exceptions import NotImplementedException
 from .utils import find_ip_in_ranges
+
 from .logger import logger
 from .db import db
 from .config import config
