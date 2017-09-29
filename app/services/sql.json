@@ -6,6 +6,10 @@
     "GET_PROVIDER": "SELECT * FROM providers where name = :name",
     "DELETE_RANGES_FOR_PROVIDER": "DELETE FROM ranges where provider = :provider",
     "INSERT_PROVIDER": "INSERT INTO providers values (null, :name, :description)",
+    "GET_RANGES": "SELECT * from ranges",
+    "GET_RANGES_WHERE_BASE": "SELECT * from ranges WHERE 1",
+    "GET_RANGES_COUNT": "SELECT COUNT(*) from ranges",
+    "GET_RANGES_COUNT_BY_PROVIDER": "SELECT COUNT(*) from ranges where provider = :provider",
     "INSERT_RANGES": "INSERT INTO ranges (id, cidr, description, ip_version, provider) values (null, :cidr, :description, :ip_version, :provider)"
 
 }

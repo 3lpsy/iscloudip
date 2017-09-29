@@ -1,64 +1,101 @@
-from .store import Store
-from .config import Config
-from .providers import provider_loader
-
+from .enums import verbosities
+from .validators import IpValidator, CidrValidator, Ipv4Validator, Ipv6Validator
+from .exceptions import NotImplementedException
+from .utils import find_ip_in_ranges
+from .logger import logger
+from .db import db
+from .config import config
+from .provider import provider_manager
+from .utils import confirm
 class App(object):
     def __init__(self, data=None):
-        self.config = Config(data)
-        self.db = Store(self._conf('DB_PATH'), force=self._conf('FORCE', default=False), debug=self._conf("DEBUG", default="False"), migrate= self._conf("LOAD"))
-        self.providers = {}
-        if self._conf("LOAD"):
-            self._collect_providers()
-
-    def _collect_providers(self):
-        for provider in provider_loader():
-            self.add_provider(provider())
-
-    def __get_providers(self):
-        return self.providers
-
-    def _get_provider(self, name):
-        return self.providers[name]
-
-    def _conf(self, key, value='NOT_SET', default='NOT_SET'):
-        # using NOT_SET is not a great a approach
-        if value != 'NOT_SET':
-            return self.config.set(key, value)
-        if default == 'NOT_SET':
-            default = None
-        return self.config.get(key, default)
-
+        config.load(data)
+        db.load(config.get('DB_PATH'), force=config.get('FORCE', default=False), debug=config.get("DEBUG", default="False"), migrate= config.get("LOAD"))
+        if config.get("DEBUG") == True:
+            logger.level = verbosities.DEBUG
+        elif config.get("VERBOSE") == True:
+            logger.level = verbosities.VERBOSE
+        elif config.get("SILENT") == True:
+            logger.level = verbosities.SILENT
+        else:
+            logger.level = verbosities.INFO
+        logger.path = config.get("DATA_DIR")
+        if config.get("LOAD"):
+            provider_manager.load_default_providers()
+            provider_manager.load_custom_providers()
+        if db.get_ranges_count() < 1:
+            if config.get('FORCE') or confirm("You have no ranges loaded in your database. Do you want to sync?"):
+                self.sync_all()
     # External Commands
-    def add_provider(self, provider):
-        if not self.db.provider_exists(provider.name):
-            self.db.add_provider(provider.name, provider.description)
-        self.providers[provider.name] = provider
+    def find(self, ip, provider=None):
+        if IpValidator.is_valid(ip):
+            return self.find_ip(ip, provider)
+        elif CidrValidator.is_valid(ip):
+            return self.find_cidr(ip, provider)
+        raise Exception("Invalid IP or CIDR")
+
+    def find_ip(self, ip, provider=None):
+        if provider:
+            ranges = db.get_ranges(provider=provider)
+        else:
+            ranges = db.get_ranges()
+        ip_range = find_ip_in_ranges(ip, ranges)
+        if not ip_range:
+            logger.not_found_ip(ip, provider)
+        if ip_range:
+            logger.found_ip(ip_range)
+
+    def find_cidr(self, cidr, provider=None):
+        raise NotImplementedException("find_cidr")
 
     def sync_all(self):
-        for provider in self.__get_providers():
-            self.sync(provider.name)
+        logger.log("Syncing All Providers")
+        for name in provider_manager.get_names():
+            self.sync(name)
         return True
 
     def sync(self, name):
-        provider = self._get_provider(name)
+        self.clear(name)
+        logger.log("Syncing Provider: {}".format(name))
+        provider = provider_manager.get(name)
         ranges = provider.get_ranges()
-        self.db.add_ranges(ranges)
+        logger.log("... {} Ranges Pulled".format(len(ranges)))
+        db.add_ranges(ranges)
+        count = db.get_ranges_count(name)
+        logger.log("... {} Ranges Saved".format(count))
         return True
 
     def clear_all(self):
-        for provider in self.__get_providers():
-            self.clear(provider)
+        logger.log("Clearing All Provider Ranges")
+        for name in provider_manager.get_names():
+            self.clear(name)
         return True
 
     def clear(self, name):
-        provider = self._get_provider(name)
-        self.db.clear_provider_ranges(name)
+        logger.log("Clearing Provider Ranges: {}".format(name))
+        count = db.get_ranges_count(name)
+        provider = provider_manager.get(name)
+        logger.log("... {} Ranges Cleared".format(count))
+        db.clear_provider_ranges(name)
         return True
 
     def drop_all(self):
-        self.db.drop_all()
+        db.drop_all()
 
-    def list(self):
-        for name, provider in self.__get_providers().items():
-            print("Provider: {} \nDescription: {}".format(provider.name, provider.description))
+    def list_providers(self):
+        for name, provider in provider_manager.all().items():
+            self.list_provider(name)
         return True
+
+    def list_provider(self, name):
+        provider = provider_manager.get(name)
+        logger.loaded_provider(provider)
+        return True
+
+    def list_ranges(self, provider = None):
+        if provider:
+            ranges = db.get_ranges(provider=provider)
+        else:
+            ranges = db.get_ranges()
+        for ip_range in ranges:
+            logger.output(ip_range)

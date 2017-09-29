@@ -6,10 +6,10 @@ class AwsProvider(CommonProvider):
     data_url = 'https://ip-ranges.amazonaws.com/ip-ranges.json'
     data_format = 'json'
 
-    def parse_datum(self, unparsed):
+    def _parse_one(self, unparsed):
         parsed = {}
         parsed['cidr'] = unparsed['ip_prefix']
-        parsed['description'] = "{}: {} - {}".format(self.name.upper(), unparsed['service'], unparsed['region'])
+        parsed['description'] = "{}: {}".format(unparsed['region'], unparsed['service'])
         parsed['provider'] = self.name
         if 'ipv6_prefix' in unparsed:
             parsed['ip_version'] = 'ipv6'
@@ -19,7 +19,7 @@ class AwsProvider(CommonProvider):
 
     def parse_data(self, data):
         prefixes = data['prefixes']
-        data = []
+        parsed_data = []
         for prefix in prefixes:
-            data.append(self.parse_datum(prefix))
-        return data
+            parsed_data.append(self._parse_one(prefix))
+        return parsed_data

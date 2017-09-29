@@ -41,4 +41,5 @@ $ python3 main.py --clear
 
 $ python3 main.py --drop
 
+$ python3 main.py -i 127.0.0.1 -p aws # not implemented
 ```
