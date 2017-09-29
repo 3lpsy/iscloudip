@@ -7,6 +7,7 @@ from .db import db
 from .config import config
 from .provider import provider_manager
 from .utils import confirm
+
 class App(object):
     def __init__(self, data=None):
         config.load(data)
@@ -98,4 +99,4 @@ class App(object):
         else:
             ranges = db.get_ranges()
         for ip_range in ranges:
-            logger.output(ip_range)
+            logger.range(ip_range)
